@@ -1,7 +1,7 @@
 const app = require('express')()
 const rw = require('random-word')
 const sse = require('tiny-sse')
-const $ = require('baconjs')
+const $ = require('kefir')
 const _ = require('lodash')
 
 app.use('/events',

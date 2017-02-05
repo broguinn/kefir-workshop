@@ -16,7 +16,7 @@ const capitalized;
 
 /*  Rewrite the above in a functional style. You should use the
   breakfastMeats.map method and define a pure capitalize(word) mapper function.
-  When you're finished, funning `node imperative.js` should print out
+  When you're finished, running `node imperative.js` should print out
   "[ 'Bacon', 'Bacon', 'Sausage', 'Sausage' ]"  */
 
 console.log(capitalized)

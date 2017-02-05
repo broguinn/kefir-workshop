@@ -8,5 +8,5 @@ const famousFoods = [
 ]
 
 console.log(
-  famousFoods.filter(food => {return food.birthYear % 2 === 1})
-)
+  famousFoods.filter(food => food.birthYear % 2 === 1)
+);
