@@ -1,6 +1,16 @@
 $(function(){
-  var messagesContainer = $('#scan .messages')
-  var messageInput = $('#scan .message-input')
+  const messagesContainer = $('#scan .messages');
+  const messageInput = $('#scan .message-input');
+
+  const makeAlert = message => `<div class="alert alert-info">${message}</div>`;
+  const isEnter = e => e.keyCode === 13;
+  const extractValue = e => e.target.value;
+  const emptyInput = input => e => input.val('');
+  const updateContent = el => content => el.html(el.html() + content);
+  const addTime = message => `${makeTime(new Date())} - ${message}`;
+  const makeTime = date =>
+    `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  const add = (a, b) => a + b;
 
   /*  In the commented out code below, in an imperative style, we add a message
     to the ".messages" element with the value of the input when the user presses
@@ -19,7 +29,7 @@ $(function(){
 
   /*  Rewrite the above in a functional reactive style, starting with an
     EventStream from the ".message-input". You can reuse some of the helper
-    functions below 
+    functions below
 
     Solution: On enter press, we add the new content to the messagesContainer
     appending it to existing input. Begin, like before, with creating the input
@@ -35,23 +45,4 @@ $(function(){
     members of the input stream. You might use this to build up an array of
     messages, or a string containing all the messages */
 
-  function isEnter(e){
-    return e.keyCode === 13
-  }
-
-  function addTime(message){
-    var d = new Date(),
-    hours = d.getHours(),
-    minutes = d.getMinutes(),
-    seconds = d.getSeconds()
-    return hours + ':' + minutes + ':' + seconds + ' - ' + message
-  }
-
-  function makeAlert(message){
-    return '<div class="alert alert-info">' + message + '</div>'
-  }
-
-  function emptyInput(input){
-    input.val('')
-  }
 })

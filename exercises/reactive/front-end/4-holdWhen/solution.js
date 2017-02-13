@@ -1,16 +1,35 @@
 $(function(){
-  var messagesContainer = $('#hold-when .messages')
-  var messageInput = $('#hold-when .message-input')
-  var valveContainer = $('#hold-when .valve-indicator')
+  const messagesContainer = $('#hold-when .messages');
+  const messageInput = $('#hold-when .message-input');
+  const valveContainer = $('#hold-when .valve-indicator');
 
-  var messageStream = messageInput.asEventStream('keypress')
-  .filter(isEnter)
-  .map(extractValue)
-  .map(addTime)
-  .map(makeAlert)
-  .scan('', concat)
-  .toEventStream()
-  var valve = openCloseValve(3000)
+  const makeAlert = message => `<div class="alert alert-info">${message}</div>`;
+  const makeIndicator = closed => closed ?
+    '<span class="label label-danger">the valve is closed</span>' :
+    '<span class="label label-success">the valve is open</span>';
+
+  const isEnter = e => e.keyCode === 13;
+  const extractValue = e => e.target.value;
+  const emptyInput = input => e => input.val('');
+  const updateContent = el => content => el.html(el.html() + content);
+  const updateValve = (valve, content) => valve.html(content);
+
+  const addTime = message => `${makeTime(new Date())} - ${message}`;
+  const makeTime = date =>
+    `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+  const add = (a, b) => a + b;
+  const zeroOrOne = prev => (prev + 1) % 2;
+
+  const messageStream = messageInput.asEventStream('keypress')
+    .filter(isEnter)
+    .map(extractValue)
+    .map(addTime)
+    .map(makeAlert)
+    .scan('', concat)
+    .toEventStream();
+
+  const valve = openCloseValve(3000)
 
   valve.map(makeIndicator)
   .onValue(updateValve(valveContainer))

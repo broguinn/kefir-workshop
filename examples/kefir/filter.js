@@ -1,13 +1,12 @@
-$ = require('baconjs');
+K = require('kefir');
 _ = require('lodash');
 
 //lazily filters
-$.sequentially(1000, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+K.sequentially(1000, _.times(10))
 .filter(x => x % 2)
-.log()
+.log();
 
-//can take props
-$.interval(100, {archived: false})
-.filter('.archived')
-.log()
-//nothing
+const blinker = K.sequentially(2000, [true, false, true, false, true]);
+K.sequentially(1000, _.times(10))
+  .filterBy(blinker)
+  .log('blinking');

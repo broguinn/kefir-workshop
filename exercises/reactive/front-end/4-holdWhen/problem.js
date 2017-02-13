@@ -1,11 +1,29 @@
 $(function(){
-  var messagesContainer = $('#hold-when .messages')
-  var messageInput = $('#hold-when .message-input')
-  var valveContainer = $('#hold-when .valve-indicator')
+  const messagesContainer = $('#hold-when .messages');
+  const messageInput = $('#hold-when .message-input');
+  const valveContainer = $('#hold-when .valve-indicator');
+
+  const makeAlert = message => `<div class="alert alert-info">${message}</div>`;
+  const makeIndicator = closed => closed ?
+    '<span class="label label-danger">the valve is closed</span>' :
+    '<span class="label label-success">the valve is open</span>';
+
+  const isEnter = e => e.keyCode === 13;
+  const extractValue = e => e.target.value;
+  const emptyInput = input => e => input.val('');
+  const updateContent = el => content => el.html(el.html() + content);
+  const updateValve = (valve, content) => valve.html(content);
+
+  const addTime = message => `${makeTime(new Date())} - ${message}`;
+  const makeTime = date =>
+    `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+  const add = (a, b) => a + b;
+  const zeroOrOne = prev => (prev + 1) % 2;
 
   /*  In the commented out code below, in an imperative style, we add a message
     to the ".messages" element with the value of the input when the user presses
-    <enter>. If the valve is closed, we hold onto the messages in an array, and 
+    <enter>. If the valve is closed, we hold onto the messages in an array, and
     send them through when it's open again */
 
   // var messageBuffer = []
@@ -42,10 +60,10 @@ $(function(){
 
   /*  Rewrite the above in a functional reactive style, starting with an
     EventStream from the ".message-input". You can reuse some of the helper
-    functions below, modifying them as necessary. Begin by creating a stream 
+    functions below, modifying them as necessary. Begin by creating a stream
     from the messageInput as before.
 
-    Solution: Expect input to not be inserted when the valve is closed, and 
+    Solution: Expect input to not be inserted when the valve is closed, and
     appended when open.*/
 
   var messageStream;
@@ -59,35 +77,4 @@ $(function(){
   /*  You should use the Bacon.fromPoll(interval, fn),
     Bacon.interval(interval, val), or Bacon.repeatedly(interval, values), along
     with functional methods, to create a valve to use with .holdWhen(valve) */
-
-  function zeroOrOne(prev){ return (prev + 1) % 2 }
-
-  function isEnter(e){
-    return e.keyCode === 13
-  }
-
-  function addTime(message){
-    var d = new Date(),
-    hours = d.getHours(),
-    minutes = d.getMinutes(),
-    seconds = d.getSeconds()
-    return hours + ':' + minutes + ':' + seconds + ' - ' + message
-  }
-
-  function makeAlert(message){
-    return '<div class="alert alert-info">' + message + '</div>'
-  }
-
-  function makeIndicator(isClosed){
-    if (isClosed) return '<span class="label label-danger">the valve is closed</span>'
-    else return '<span class="label label-success">the valve is open</span>'
-  }
-
-  function updateValve(valve, content){
-    valve.html(content)
-  }
-
-  function emptyInput(input){
-    input.val('')
-  }
 })

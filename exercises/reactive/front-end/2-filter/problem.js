@@ -1,6 +1,15 @@
 $(function(){
-  var messageContent = $('#filter .message')
-  var messageInput = $('#filter .message-input')
+  const messageContent = $('#filter .message');
+  const messageInput = $('#filter .message-input');
+
+  const makeAlert = message => `<div class="alert alert-info">${message}</div>`;
+  const isEnter = e => e.keyCode === 13;
+  const extractValue = e => e.target.value;
+  const emptyInput = input => input.val('');
+  const updateContent = el => content => el.html(content);
+  const addTime = message => `${makeTime(new Date())} - ${message}`;
+  const makeTime = date =>
+    `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
   /*  In the commented out code below, in an imperative style, we update the
     content of ".message" with the value of the input when the user presses
@@ -19,34 +28,15 @@ $(function(){
 
   /*  Rewrite the above in a functional reactive style, starting with an
     EventStream from the ".message-input". You can reuse some of the helper
-    functions below 
+    functions below
 
     solution: Time content appears only on enter keypress*/
 
-  var inputStream;
+  const inputStream;
 
   /*  You can use the inputStream's .filter(filterer) method to filter out
     non-<enter> key presses */
 
   /*  You can use the .map and .onValue methods from the "map" example */
 
-  function makeAlert(message){
-    return '<div class="alert alert-info">' + message + '</div>'
-  }
-
-  function isEnter(e){
-    return e.keyCode === 13
-  }
-
-  function addTime(message){
-    var d = new Date(),
-    hours = d.getHours(),
-    minutes = d.getMinutes(),
-    seconds = d.getSeconds()
-    return hours + ':' + minutes + ':' + seconds + ' - ' + message
-  }
-
-  function emptyInput(input){
-    input.val('')
-  }
 })
