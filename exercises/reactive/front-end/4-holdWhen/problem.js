@@ -21,6 +21,11 @@ $(function(){
   const add = (a, b) => a + b;
   const zeroOrOne = prev => (prev + 1) % 2;
 
+  const openCloseValve = duration => Kefir.interval(duration, 0)
+    .toProperty(() => 0)
+    .scan(zeroOrOne, 0)
+    .map(Boolean);
+
   /*  In the commented out code below, in an imperative style, we add a message
     to the ".messages" element with the value of the input when the user presses
     <enter>. If the valve is closed, we hold onto the messages in an array, and

@@ -15,8 +15,7 @@ $(function(){
     .filter(isEnter)
     .map(extractValue)
     .map(addTime)
-    .map(makeAlert)
-    .log('alert');
+    .map(makeAlert);
 
   messageStream.onValue(updateContent(messagesContainer));
   messageStream.onValue(emptyInput(messageInput));
