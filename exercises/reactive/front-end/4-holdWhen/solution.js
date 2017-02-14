@@ -42,7 +42,7 @@ $(function(){
   messageStream.onValue(emptyInput(messageInput));
   messageStream
     .log('prebuffer')
-    .bufferWhileBy(valve, { flushOnChange: true })
+    .bufferWhileBy(valve, { flushOnChange: tr ue })
     .log('buffered')
     .onValue(updateContent(messagesContainer));
 })

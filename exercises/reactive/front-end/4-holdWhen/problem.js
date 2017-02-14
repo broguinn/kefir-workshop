@@ -11,8 +11,8 @@ $(function(){
   const isEnter = e => e.keyCode === 13;
   const extractValue = e => e.target.value;
   const emptyInput = input => e => input.val('');
-  const updateContent = el => content => el.html(el.html() + content);
-  const updateValve = (valve, content) => valve.html(content);
+  const updateContent = el => content => el.html(content.pop());
+  const updateValve = valve => content => valve.html(content);
 
   const addTime = message => `${makeTime(new Date())} - ${message}`;
   const makeTime = date =>
